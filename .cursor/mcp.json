@@ -6,12 +6,9 @@
         "CLIENT_ID": "3660753192626.8903469228982"
       }
     },
-    "figma": {
-      "url": "https://mcp.figma.com/mcp"
-    },
     "google-workspace-aircloset": {
-      "command": "python3",
-      "args": ["scripts/aircloset-sheets-mcp-cloud.py"]
+      "command": "bash",
+      "args": ["scripts/run-sheets-mcp.sh"]
     }
   }
 }

@@ -4,3 +4,5 @@
 *.pickle
 secrets/
 SECRETS_LOCAL.txt
+.local/
+.local/

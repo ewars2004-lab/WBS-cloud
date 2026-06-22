@@ -15,15 +15,41 @@ WBS-cloud を Cloud Agent で **WBS 更新まで自律実行** するための�
 | A5 | Cloud Agent Secrets | https://cursor.com/dashboard/cloud-agents → Secrets | **要ログイン** |
 | A6 | 環境に `ewars2004-lab/WBS-cloud` を登録 | https://cursor.com/dashboard/cloud-agents | 要確認 |
 
-### B. Cursor Secrets（Google Sheets 用）
+### B. Google Sheets MCP（Cloud Agent では Dashboard 登録が必須）
 
-Dashboard → **Cloud Agents** → **Secrets** に以下を追加:
+Cloud Agent 検証（2026-06-22）では、リポジトリの `.cursor/mcp.json` だけでは **stdio MCP がカタログに載らない** 事象を確認。Slack（HTTP）は OK、Sheets（stdio）は Dashboard 側の追加が必要。
 
-| Secret 名 | 値の作り方 |
-|---|---|
-| `GWS_CREDENTIALS_PICKLE_B64` | ローカル Mac で `./scripts/prepare-secrets.sh` を実行し、出力をコピペ |
+#### B-1. 認証値を用意（ローカル Mac）
 
-（任意）`GWS_CLIENT_SECRET_JSON` — OAuth 再認証が必要な場合のみ。通常は pickle のみで可。
+```bash
+cd ~/Projects/step-rope/WBS-cloud
+./scripts/prepare-secrets.sh
+```
+
+出力の base64 文字列を控える（**リポジトリにコミットしない**）。
+
+#### B-2. Dashboard で stdio MCP を追加
+
+1. https://cursor.com/agents を開く
+2. MCP 設定（Integrations / MCP ドロップダウン）→ **Add MCP** または **Edit**
+3. サーバー名: `google-workspace-aircloset`
+4. 以下を登録（**env に実値を入れる**。`${env:...}` 補間は Cloud Agent では動かない場合あり）:
+
+```json
+{
+  "command": "python3",
+  "args": ["scripts/aircloset-sheets-mcp-cloud.py"],
+  "env": {
+    "GWS_CREDENTIALS_PICKLE_B64": "（prepare-secrets.sh の出力をここに貼る）"
+  }
+}
+```
+
+#### B-3. （代替）Secrets タブ
+
+Dashboard → **Cloud Agents** → **Secrets** に `GWS_CREDENTIALS_PICKLE_B64` を追加してもよいが、**stdio MCP の env に同じ値を直書き**しないと MCP プロセスに渡らない報告あり。B-2 を優先。
+
+（任意）`GWS_CLIENT_SECRET_JSON` — OAuth 再認証が必要な場合のみ。
 
 ### C. Slack ワークスペース側
 
