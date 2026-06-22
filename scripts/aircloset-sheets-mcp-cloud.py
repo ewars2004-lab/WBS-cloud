@@ -103,19 +103,31 @@ def _ensure_config_dir():
 def get_creds():
     _ensure_config_dir()
     creds = None
-    if os.path.exists(TOKEN_FILE):
+
+    # Cloud Agent: Secret が VM 環境変数にあれば pickle ファイル不要
+    b64 = os.environ.get("GWS_CREDENTIALS_PICKLE_B64")
+    if b64:
+        try:
+            creds = pickle.loads(base64.b64decode(b64))
+        except Exception as exc:
+            raise RuntimeError(f"GWS_CREDENTIALS_PICKLE_B64 decode failed: {exc}") from exc
+
+    if creds is None and os.path.exists(TOKEN_FILE):
         with open(TOKEN_FILE, "rb") as f:
             creds = pickle.load(f)
+
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
-            with open(TOKEN_FILE, "wb") as f:
-                pickle.dump(creds, f)
+            if os.path.exists(os.path.dirname(TOKEN_FILE)):
+                with open(TOKEN_FILE, "wb") as f:
+                    pickle.dump(creds, f)
         else:
             if not os.path.exists(CLIENT_SECRET):
                 raise RuntimeError(
                     "Google Sheets credentials missing. Set Cursor Secret "
-                    "GWS_CREDENTIALS_PICKLE_B64 (and optionally GWS_CLIENT_SECRET_JSON)."
+                    "GWS_CREDENTIALS_PICKLE_B64 (Dashboard → Cloud Agents → My Secrets). "
+                    "Then restart the Cloud Agent or run: bash scripts/cloud-install.sh"
                 )
             flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET, SCOPES)
             creds = flow.run_local_server(port=8092, open_browser=False)

@@ -74,9 +74,18 @@ MCP ツール名との対応: `sheets_values_get` → `values-get`、`sheets_val
 
 ### 検証（起動直後）
 
-1. Slack: 検索 `81205 after:YYYY-MM-DD` が返ること
-2. Sheets: `sheets_values_get` または `python3 scripts/sheets-cli.py verify`
-3. 問題なければ Planner からバッチ開始
+```bash
+bash scripts/verify-cloud-ready.sh
+```
+
+または手動:
+
+1. `echo ${GWS_CREDENTIALS_PICKLE_B64:+Secret設定済み}` — 空なら Dashboard → My Secrets を確認し **Agent を再起動**
+2. `bash scripts/cloud-install.sh && python3 scripts/sheets-cli.py verify`
+3. Slack: `81205 after:YYYY-MM-DD` 検索
+4. 3つ OK なら Planner からバッチ開始
+
+**Secret を登録した直後**は、実行中の Cloud Agent には反映されない。必ず **新しい Agent セッション**で再検証すること。
 
 ### セットアップ未完了時
 
