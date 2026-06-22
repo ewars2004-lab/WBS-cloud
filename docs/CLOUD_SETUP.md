@@ -26,7 +26,20 @@ Cloud Agent 検証（2026-06-22）では、リポジトリの `.cursor/mcp.json`
 
 **最低限**: B-1 の Secret だけ設定すれば、`cloud-install.sh` が pickle を展開し Agent は CLI で Sheets 操作できる。
 
-#### B-1. Secret を Dashboard に追加（推奨・必須）
+#### B-0. 完全自動（推奨・API キー1回だけ）
+
+Dashboard への手動貼り付けを避ける場合:
+
+```bash
+cd ~/Projects/step-rope/WBS-cloud
+./scripts/setup-cloud-complete.sh
+# API キーを ~/.config/cursor/cloud-api-key に保存（Integrations → Cloud Agents API）
+./scripts/launch-wbs-cloud-agent.sh launch
+```
+
+`launch` は API の `envVars` + `mcpServers` に認証を直渡しするため、**Secrets タブ・MCP タブへの貼り付けが不要**。
+
+#### B-1. Secret を Dashboard に追加（Dashboard から手動起動する場合）
 
 ローカル Mac で:
 

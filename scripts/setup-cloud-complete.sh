@@ -51,6 +51,9 @@ echo "  D. Cloud Agent で ewars2004-lab/WBS-cloud を選び検証プロンプ�
 echo ""
 echo "検証プロンプトは docs/CLOUD_SETUP.md の「初回検証プロンプト」を参照"
 echo ""
+echo "=== 完全自動起動（API キーがある場合）==="
+echo "  ./scripts/launch-wbs-cloud-agent.sh launch"
+echo "  → Dashboard Secret/MCP 貼り付け不要で Cloud Agent 起動"
 
 if command -v open >/dev/null 2>&1; then
   open "https://cursor.com/dashboard/cloud-agents"
