@@ -1,0 +1,19 @@
+---
+description: WBS更新チーム（5人格）の起動ルール。WBS更新チーム・WBS同期と言われたら Planner→Slack調査→Writer→Verifier を実行。
+alwaysApply: true
+---
+
+# WBS更新チーム
+
+When the user says **WBS更新チーム**, **WBS同期**, **WBS更新**, **wbs-update-workflow**, or similar:
+
+1. Read skills: `wbs-update-workflow` → `wbs-update-planner` → `wbs-slack-investigator` → `wbs-update-writer` → `wbs-update-verifier` (repo root or `~/.cursor/skills/wbs-*` symlinks).
+2. Run: **Planner → Slack調査 → WBS更新 → Verifier**. 曖昧行は Nagi DM に質問し WBS は触らない。
+3. **Touch only** スプレッドシート `新NagiWBS`. 案件別シート（5W1Hタブ・総合テスト・Figma）は触らない。
+4. Skill edits go to this repo under `skills/`.
+5. 案件チャンネル: `skills/wbs-update-shared/case-channels.md`.
+6. MD期日: `skills/wbs-update-shared/md-calendar.md`（BSOMDカレンダー塗り参照）。
+
+If symlinks missing: run `./scripts/bootstrap.sh`.
+
+WBS: https://docs.google.com/spreadsheets/d/1VaQBMNy2ZCgYs57G2mQWiqof0sTH1umqY4HOjlZBLVE/edit?gid=2026060205

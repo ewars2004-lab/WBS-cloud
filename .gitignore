@@ -1,0 +1,6 @@
+# Secrets / credentials — never commit
+.env
+.env.*
+*.pickle
+secrets/
+SECRETS_LOCAL.txt

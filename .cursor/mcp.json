@@ -8,6 +8,10 @@
     },
     "figma": {
       "url": "https://mcp.figma.com/mcp"
+    },
+    "google-workspace-aircloset": {
+      "command": "python3",
+      "args": ["scripts/aircloset-sheets-mcp-cloud.py"]
     }
   }
 }
