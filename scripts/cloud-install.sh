@@ -6,7 +6,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 CONFIG_DIR="${GWS_CONFIG_DIR:-${HOME}/.config/gws-aircloset}"
 TOKEN_FILE="${CONFIG_DIR}/python-credentials.pickle"
 
-pip install --quiet google-auth google-auth-oauthlib google-api-python-client
+pip3 install --quiet google-auth google-auth-oauthlib google-api-python-client
 
 chmod +x "${ROOT}/scripts/"*.sh 2>/dev/null || true
 chmod +x "${ROOT}/scripts/"*.py 2>/dev/null || true
