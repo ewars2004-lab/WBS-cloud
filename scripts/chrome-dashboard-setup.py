@@ -134,25 +134,32 @@ def add_secret(page, secret_value: str) -> None:
         log(f"✅ Secret '{SECRET_NAME}' は既に登録済み")
         return
 
-    page.get_by_role("button", name="Add Secrets").first.scroll_into_view_if_needed()
-    page.get_by_role("button", name="Add Secrets").first.click()
+    page.get_by_role("button", name="Add Secrets").last.scroll_into_view_if_needed()
+    page.get_by_role("button", name="Add Secrets").last.click()
     page.wait_for_timeout(1000)
 
-    env_line = f"{SECRET_NAME}={secret_value}"
-    inp = page.locator('input[placeholder*="Paste your .env" i]')
-    if inp.count() == 0:
-        page.screenshot(path=str(REPO / ".local" / "chrome-setup-debug.png"), full_page=True)
-        raise RuntimeError("Secret 入力欄が見つかりません")
-    inp.fill(env_line)
+    name_input = page.get_by_label("Name", exact=True)
+    if name_input.count() == 0:
+        name_input = page.locator('input[placeholder*="secret name" i]').last
+    name_input.fill(SECRET_NAME)
+
+    value_input = page.get_by_label("Value", exact=True)
+    if value_input.count() == 0:
+        value_input = page.locator('input[type="password"], textarea').last
+    value_input.fill(secret_value)
     page.wait_for_timeout(500)
 
-    save = page.get_by_role("button", name="Save").last
-    save.click(timeout=10000)
+    for i in range(page.get_by_role("button", name="Save").count()):
+        btn = page.get_by_role("button", name="Save").nth(i)
+        if not btn.is_disabled():
+            btn.click()
+            break
     page.wait_for_timeout(3000)
-    page.goto(DASHBOARD_URL, wait_until="domcontentloaded")
+    page.reload(wait_until="domcontentloaded")
     page.wait_for_timeout(2000)
+    page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
 
-    if secret_exists(page):
+    if secret_exists(page) or SECRET_NAME in page.inner_text("body"):
         log(f"✅ Secret '{SECRET_NAME}' を登録しました")
     else:
         page.screenshot(path=str(REPO / ".local" / "chrome-setup-after.png"), full_page=True)
