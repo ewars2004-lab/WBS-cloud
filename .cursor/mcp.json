@@ -7,8 +7,8 @@
       }
     },
     "google-workspace-aircloset": {
-      "command": "bash",
-      "args": ["scripts/run-sheets-mcp.sh"]
+      "command": "python3",
+      "args": ["scripts/aircloset-sheets-mcp-cloud.py"]
     }
   }
 }

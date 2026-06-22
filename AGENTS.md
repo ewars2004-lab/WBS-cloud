@@ -28,8 +28,30 @@
 | MCP | 用途 |
 |---|---|
 | `slack` | 案件チャンネル調査・Nagi DM |
-| `google-workspace-aircloset` | 新NagiWBS 読み書き |
-| `figma` | 任意（WBS更新では通常不要） |
+| `google-workspace-aircloset` | 新NagiWBS 読み書き（Dashboard 登録が必要な場合あり） |
+
+### Google Sheets — MCP が使えないときのフォールバック
+
+VM の Secret `GWS_CREDENTIALS_PICKLE_B64` が設定されていれば、`scripts/cloud-install.sh` が起動時に認証を展開する。  
+**stdio MCP がカタログに無くても** 次の CLI で読み書きできる（WBS 更新は継続すること）:
+
+```bash
+# ヘッダ行の読取（検証）
+python3 scripts/sheets-cli.py verify
+
+# 任意レンジ
+python3 scripts/sheets-cli.py values-get \
+  --spreadsheet 1VaQBMNy2ZCgYs57G2mQWiqof0sTH1umqY4HOjlZBLVE \
+  --range '新NagiWBS!A5:O5'
+
+# 更新（values は 2D JSON 配列の文字列）
+python3 scripts/sheets-cli.py values-update \
+  --spreadsheet 1VaQBMNy2ZCgYs57G2mQWiqof0sTH1umqY4HOjlZBLVE \
+  --range '新NagiWBS!E171' \
+  --values '[["進行中"]]'
+```
+
+MCP ツール名との対応: `sheets_values_get` → `values-get`、`sheets_values_update` → `values-update`。
 
 ### 絶対ルール
 
@@ -50,12 +72,15 @@
 
 `docs/AUTOMATION.md` 参照。平日 10:20 / 19:00 JST。
 
-### 検証コマンド（起動直後）
+### 検証（起動直後）
 
-1. `sheets_values_get` → `新NagiWBS!A5:O5`
-2. Slack 検索 → `81205 after:YYYY-MM-DD`
+1. Slack: 検索 `81205 after:YYYY-MM-DD` が返ること
+2. Sheets: `sheets_values_get` または `python3 scripts/sheets-cli.py verify`
 3. 問題なければ Planner からバッチ開始
 
 ### セットアップ未完了時
 
-`docs/CLOUD_SETUP.md` のチェックリストを確認。Secrets / OAuth が未設定なら作業を止めて報告する。
+`docs/CLOUD_SETUP.md` のチェックリストを確認。
+
+- Slack `needsAuth` → Dashboard で Connect
+- Sheets 認証なし → Secret `GWS_CREDENTIALS_PICKLE_B64` を Dashboard に追加（ローカルで `./scripts/setup-cloud-complete.sh`）

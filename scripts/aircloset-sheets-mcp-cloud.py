@@ -90,7 +90,7 @@ def _ensure_config_dir():
     os.makedirs(CONFIG_DIR, exist_ok=True)
 
     b64 = os.environ.get("GWS_CREDENTIALS_PICKLE_B64")
-    if b64 and not os.path.exists(TOKEN_FILE):
+    if b64:
         with open(TOKEN_FILE, "wb") as f:
             f.write(base64.b64decode(b64))
 
