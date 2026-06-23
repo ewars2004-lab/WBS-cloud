@@ -22,6 +22,7 @@
 
 - `skills/wbs-update-shared/case-channels.md`
 - `skills/wbs-update-shared/md-calendar.md`
+- `skills/wbs-update-shared/5w1h-customer-view.md` — J〜O列のお客様目線ガイド
 
 ### MCP（`.cursor/mcp.json`）
 

@@ -47,3 +47,4 @@ Cursor は `scripts/bootstrap.sh` で `~/.cursor/skills/wbs-*` に symlink す�
 - WBS: https://docs.google.com/spreadsheets/d/1VaQBMNy2ZCgYs57G2mQWiqof0sTH1umqY4HOjlZBLVE/edit?gid=2026060205
 - 案件チャンネル: `skills/wbs-update-shared/case-channels.md`
 - MD期日（カレンダー塗り）: `skills/wbs-update-shared/md-calendar.md`
+- 5W1Hお客様目線（J〜O）: `skills/wbs-update-shared/5w1h-customer-view.md`

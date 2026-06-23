@@ -32,6 +32,12 @@ description: WBS更新のVerifier。Slack根拠・推察理由・更新案の整
 
 ### 5W1H列（J〜O）
 
+[5w1h-customer-view.md](../wbs-update-shared/5w1h-customer-view.md) の品質チェックに従う。
+
+- [ ] M（What）がお客様体験を述べている（社内タスク名だけではない）
+- [ ] N（Why）にお客様への影響がある
+- [ ] O（How）がお客様視点の検証・改善として読める
+- [ ] B列の工程と M/N/O の文型が対応している
 - [ ] What/How/Who/When の混在が極端でない（WBS要約として読める）
 - [ ] 案件別5W1Hタブの品質までは要求しない（進捗表の要約として妥当か）
 
@@ -86,5 +92,6 @@ Investigator が `confidence: low` のときは検証せず `ambiguous: true` �
 
 ## 参照
 
+- 5W1Hお客様目線: [5w1h-customer-view.md](../wbs-update-shared/5w1h-customer-view.md)
 - Shuri人格チームの5W1H品質基準は **適用しない**（別ファイルの提出物向け）
 - 進捗表としての整合性のみ見る

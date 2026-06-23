@@ -7,6 +7,8 @@ description: WBS更新のSlack調査担当。案件チャンネル・関連チ�
 
 Slack のやり取りを **会話として読み**、WBS行の状態・根拠・5W1H要約を推察する。キーワード固定マッチに頼らない。
 
+5W1H（`inference.what/why/how` 等）は **お客様目線** で書く。[5w1h-customer-view.md](../wbs-update-shared/5w1h-customer-view.md) を参照。
+
 ## 入力
 
 Planner の `targets[]` 1行分 + [case-channels.md](../wbs-update-shared/case-channels.md)
@@ -87,9 +89,9 @@ MDモード手順:
     "when": "2026/05/25以降。stg確認〜Android追加開発判明まで継続。",
     "where": "#pj_120303",
     "who": "Genさん、Ryoさん、Nagi。",
-    "what": "iOS先行リリース可否とAndroid追加開発の切り分けが追える状態。",
-    "why": "OS別の状態を混ぜると未対応を見落とすため。",
-    "how": "#pj_120303で審査・リリース連絡を追いWBSへ反映する。"
+    "what": "お客様がiOS先行リリース後も安心して使えるか、Android追加開発の見通しが追える状態になる",
+    "why": "OS別の状態が混ざると、お客様への提供タイミングが不透明になるため",
+    "how": "審査・リリース連絡を追い、お客様体験への影響をWBSに反映する"
   },
   "reasoning": "6/3のスレッドでiOS審査通過とAndroid別途開発が確認され、6/4にNagiがiOS先行リリース可否を質問。回答待ちのため進行中。",
   "threads_read": ["https://..."]
@@ -112,4 +114,5 @@ MDモード手順:
 
 ## 参照
 
+- 5W1Hお客様目線: [5w1h-customer-view.md](../wbs-update-shared/5w1h-customer-view.md)
 - 案件チャンネル: [case-channels.md](../wbs-update-shared/case-channels.md)

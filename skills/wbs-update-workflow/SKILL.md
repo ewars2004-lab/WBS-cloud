@@ -125,4 +125,5 @@ WBS更新チーム — バッチ完了（{日時} JST）
 - spreadsheet_id: `1VaQBMNy2ZCgYs57G2mQWiqof0sTH1umqY4HOjlZBLVE`
 - シート名: `新NagiWBS`
 - 案件チャンネル: [case-channels.md](../wbs-update-shared/case-channels.md)
+- 5W1Hお客様目線: [5w1h-customer-view.md](../wbs-update-shared/5w1h-customer-view.md)
 - Automation: [docs/AUTOMATION.md](../../docs/AUTOMATION.md)

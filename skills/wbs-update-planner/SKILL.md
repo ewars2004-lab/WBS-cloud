@@ -31,7 +31,7 @@ description: WBS更新のPlanner。新NagiWBSから対象行（進行中 or 完�
 | G | 完了日時 | 最終更新の参考 |
 | H | 完了根拠Slackセリフリンク | **対象判定** |
 | I | メモ | 既存メモ |
-| J〜O | When〜How | 既存5W1H要約 |
+| J〜O | When〜How | 既存5W1H要約（お客様目線 — [5w1h-customer-view.md](../wbs-update-shared/5w1h-customer-view.md)） |
 
 ## 対象行の条件
 
