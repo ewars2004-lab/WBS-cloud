@@ -13,6 +13,7 @@ When the user says **WBS更新チーム**, **WBS同期**, **WBS更新**, **wbs-u
 4. Skill edits go to this repo under `skills/`.
 5. 案件チャンネル: `skills/wbs-update-shared/case-channels.md`.
 6. MD期日: `skills/wbs-update-shared/md-calendar.md`（BSOMDカレンダー塗り参照）。
+7. 5W1H（J〜O）: `skills/wbs-update-shared/5w1h-customer-view.md`（お客様目線の書き方・工程別テンプレ）。
 
 If symlinks missing: run `./scripts/bootstrap.sh`.
 
