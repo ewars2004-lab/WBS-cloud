@@ -16,6 +16,8 @@
 
 4. Cloud で GWS MCP が必要なら、WBS-cloud と同じ Integrations 設定（`dashboard-mcp-dual.json`）を Dashboard に1回登録済みで足りる。
 
+4. Cloud で GWS を使うリポには `install-gws-per-repo-cloud.sh` で `cloud-install.sh` / `verify-gws-cloud.sh` を配布済みにする。
+
 ## やること（Mac 初回のみ・全リポジトリ共通）
 
 ```bash

@@ -96,6 +96,7 @@ heal_local() {
   step "Phase 4/6: グローバル mcp.json とルール"
   python3 scripts/sync-cursor-mcp-json.py
   bash scripts/install-gws-cursor-rules.sh
+  bash scripts/install-gws-per-repo-cloud.sh
 
   step "Phase 5/6: Cloud 用 Secret ファイル生成"
   bash scripts/prepare-dual-secrets.sh

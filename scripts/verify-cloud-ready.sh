@@ -5,53 +5,12 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 FAIL=0
 
-echo "=== WBS-cloud Cloud 検証（デュアル GWS） ==="
+echo "=== WBS-cloud Cloud 検証（デュアル GWS + Sheets） ==="
 
-check_secret() {
-  local name="$1"
-  local val="${!name:-}"
-  if [[ -n "$val" ]]; then
-    echo "✅ ${name}: 設定済み (len=${#val})"
-  else
-    echo "❌ ${name}: 未設定"
-    echo "   → Dashboard → Cloud Agents → Secrets に登録後、Agent を再起動"
-    FAIL=1
-  fi
-}
-
-check_secret GWS_CREDENTIALS_PICKLE_B64_AIRCLOSET
-check_secret GWS_CREDENTIALS_PICKLE_B64_PERSONAL
+bash scripts/verify-gws-cloud.sh || FAIL=1
 
 echo ""
-echo "--- cloud-install ---"
-bash scripts/cloud-install.sh || FAIL=1
-
-echo ""
-echo "--- gws-verify aircloset ---"
-if GWS_CONFIG_DIR="${HOME}/.config/gws-aircloset" \
-   python3 scripts/gws-verify-profile.py aircloset >/tmp/wbs-verify-aircloset.json 2>/tmp/wbs-verify-aircloset.err; then
-  echo "✅ aircloset GWS OK"
-  head -3 /tmp/wbs-verify-aircloset.json
-else
-  echo "❌ aircloset GWS NG"
-  cat /tmp/wbs-verify-aircloset.err
-  FAIL=1
-fi
-
-echo ""
-echo "--- gws-verify personal ---"
-if GWS_CONFIG_DIR="${HOME}/.config/gws" \
-   python3 scripts/gws-verify-profile.py personal >/tmp/wbs-verify-personal.json 2>/tmp/wbs-verify-personal.err; then
-  echo "✅ personal GWS OK"
-  head -3 /tmp/wbs-verify-personal.json
-else
-  echo "❌ personal GWS NG"
-  cat /tmp/wbs-verify-personal.err
-  FAIL=1
-fi
-
-echo ""
-echo "--- sheets-cli verify (aircloset) ---"
+echo "--- sheets-cli verify (aircloset・WBS 例) ---"
 if GWS_CONFIG_DIR="${HOME}/.config/gws-aircloset" \
    python3 scripts/sheets-cli.py verify >/tmp/wbs-verify-sheets.json 2>/tmp/wbs-verify-sheets.err; then
   echo "✅ sheets-cli verify OK"
