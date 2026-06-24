@@ -18,6 +18,9 @@
 | L3 | グローバル MCP 有効 | `~/.cursor/mcp.json` + Cursor 再起動後にツール呼び出し |
 | C1 | Dashboard Secrets 登録済み | Cloud Agents → Secrets に2名前 |
 | C2 | 任意リポの Cloud Agent で GWS 動作 | VM 上で `verify-cloud-ready.sh` が OK |
+| C2' | **ドライラン**（Agent 不要） | `bash scripts/gws-dry-run-cloud-verify.sh` |
+
+**C2'** は Dashboard Secrets が VM に渡ったときと同じ経路を Mac で検証する。本番 C2 は Agent を **1本だけ** UI 起動。
 
 **WBS-cloud の起動・API キー・WBS スプレッドシート読取は完了条件に含めない**（検証の一例にすぎない）。
 

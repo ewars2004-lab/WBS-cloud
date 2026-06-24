@@ -9,9 +9,9 @@ echo "=== WBS-cloud Cloud 検証（デュアル GWS） ==="
 
 check_secret() {
   local name="$1"
-  # shellcheck disable=SC2154
-  if [[ -n "${!name:-}" ]]; then
-    echo "✅ ${name}: 設定済み (len=${#!name})"
+  local val="${!name:-}"
+  if [[ -n "$val" ]]; then
+    echo "✅ ${name}: 設定済み (len=${#val})"
   else
     echo "❌ ${name}: 未設定"
     echo "   → Dashboard → Cloud Agents → Secrets に登録後、Agent を再起動"
