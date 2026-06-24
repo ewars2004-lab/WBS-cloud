@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Cloud VM: Dashboard Secrets → pickle 展開 + 両プロファイル検証（リポ共通）
+# Cloud VM: Dashboard Secrets → pickle 展開 + 両プロファイル検証（リポ内スクリプトのみ・WBS-cloud 不要）
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 FAIL=0
 
-echo "=== GWS Cloud 検証（デュアル） ==="
+echo "=== GWS Cloud 検証（デュアル・workspace 共通） ==="
 
 check_secret() {
   local name="$1"
@@ -31,10 +31,10 @@ else
   FAIL=1
 fi
 
-WBS="${GWS_SCRIPTS_ROOT:-${HOME}/Projects/WBS-cloud}"
-verify_py="${WBS}/scripts/gws-verify-profile.py"
+verify_py="${ROOT}/scripts/gws-verify-profile.py"
 if [[ ! -f "$verify_py" ]]; then
-  echo "❌ gws-verify-profile.py が見つかりません: $verify_py"
+  echo "❌ gws-verify-profile.py がこのリポにありません"
+  echo "   Mac で: bash ~/Projects/WBS-cloud/scripts/install-gws-per-repo-cloud.sh"
   exit 1
 fi
 
