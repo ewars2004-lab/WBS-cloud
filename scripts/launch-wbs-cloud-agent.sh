@@ -4,6 +4,8 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
+# shellcheck source=scripts/gws-visual.sh
+[[ -f "${REPO_ROOT}/scripts/gws-visual.sh" ]] && source "${REPO_ROOT}/scripts/gws-visual.sh"
 
 API_KEY_FILE="${CURSOR_API_KEY_FILE:-${HOME}/.config/cursor/cloud-api-key}"
 PAYLOAD_FILE="${REPO_ROOT}/.local/cloud-agent-launch-payload.json"
@@ -49,7 +51,10 @@ case "$MODE" in
       echo "ERROR: set CURSOR_API_KEY or ${API_KEY_FILE}" >&2
       exit 1
     fi
-    echo "🚀 Launching Cloud Agent (envVars + mcpServers 同梱 → Dashboard 不要)..."
+    if [[ "${GWS_VISUAL:-}" == "1" ]]; then
+      vlog "Cursor API に接続して Cloud Agent を起動します（ブラウザの Dashboard は不要）"
+    fi
+    echo "🚀 Launching Cloud Agent (envVars + mcpServers 同梱)..."
     resp="$(curl -sS -w "\n__HTTP__%{http_code}" \
       -X POST "https://api.cursor.com/v1/agents" \
       -u "${api_key}:" \
@@ -66,6 +71,9 @@ case "$MODE" in
     if [[ -n "$agent_id" ]]; then
       echo ""
       echo "Agent: https://cursor.com/agents/${agent_id}"
+      if [[ "${GWS_VISUAL:-}" == "1" ]]; then
+        vlog "Agent ページを開きます。VM 上で verify-cloud-ready が実行されます"
+      fi
       open "https://cursor.com/agents/${agent_id}" 2>/dev/null || true
     fi
     ;;

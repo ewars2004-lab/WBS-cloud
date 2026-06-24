@@ -22,6 +22,9 @@ case "$PROFILE" in
 esac
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+# shellcheck source=scripts/gws-visual.sh
+[[ -f "${REPO_ROOT}/scripts/gws-visual.sh" ]] && source "${REPO_ROOT}/scripts/gws-visual.sh"
+
 PICKLE="${GWS_CONFIG_DIR}/python-credentials.pickle"
 
 if [[ ! -f "${GWS_CONFIG_DIR}/client_secret.json" ]]; then
@@ -30,7 +33,11 @@ if [[ ! -f "${GWS_CONFIG_DIR}/client_secret.json" ]]; then
 fi
 
 echo "==> OAuth: ${PROFILE} (${GWS_CONFIG_DIR})"
-echo "    ブラウザで正しい Google アカウントを選んでください。"
+if [[ "${GWS_VISUAL:-}" == "1" ]]; then
+  vlog "ブラウザが開きます。${PROFILE} 用の Google アカウントを選んでください"
+else
+  echo "    ブラウザで正しい Google アカウントを選んでください。"
+fi
 rm -f "$PICKLE"
 
 python3 -c "

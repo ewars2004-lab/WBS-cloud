@@ -2,7 +2,24 @@
 
 Dashboard を手で触らずに済ませる方法。
 
-## 一回のコマンド
+## 視覚モード（手順を見ながら進める）
+
+`gws-bootstrap-all.sh` は内部で `--visual` を付けます。
+
+- **Cursor | Chrome を画面分割**すると、ターミナルの `[手順]` / `👁` ログと Chrome の操作が対応します
+- **普段の Chrome プロファイル**を使います（白画面になりやすい自動化用プロファイルは使いません）
+- チャットにスクリーンショットは出しません（デバッグ時のみ `GWS_DEBUG=1`）
+
+```bash
+# ローカルだけ見ながら
+bash scripts/gws-heal.sh --visual
+
+# API キー + Cloud だけ再開
+bash scripts/gws-resume-cloud.sh
+```
+
+Tier3（指紋・ログイン）だけ人間 → 完了後チャットで **「続けて」**。
+
 
 ```bash
 cd ~/Projects/WBS-cloud

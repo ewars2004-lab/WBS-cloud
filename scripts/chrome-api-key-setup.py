@@ -8,7 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from gws_chrome_lib import click_first, connect_page, log, wait_for_url
+from gws_chrome_lib import click_first, connect_page, log, reload_until_ready, vlog, wait_for_url
 
 INTEGRATIONS_URL = "https://cursor.com/dashboard?tab=integrations"
 API_KEY_FILE = Path.home() / ".config/cursor/cloud-api-key"
@@ -43,16 +43,18 @@ def main() -> int:
         return 1
 
     API_KEY_FILE.parent.mkdir(parents=True, exist_ok=True)
+    vlog("Integrations ページを開きます: cursor.com/dashboard?tab=integrations")
     pw, browser, page = connect_page(INTEGRATIONS_URL)
     try:
         if not wait_for_url(page, "cursor.com/dashboard", timeout_sec=120):
-            log("Chrome で Cursor ログインが必要です（最大5分待機）…")
+            vlog("Cursor ログイン画面が出たら ewars2004@gmail.com でログインしてください（最大5分待機）")
             if not wait_for_url(page, "cursor.com/dashboard", timeout_sec=300):
                 raise RuntimeError("Dashboard に到達できませんでした")
 
-        page.goto(INTEGRATIONS_URL, wait_until="domcontentloaded")
-        page.wait_for_timeout(2000)
+        vlog("Integrations タブを読み込み中…")
+        reload_until_ready(page, INTEGRATIONS_URL)
 
+        vlog("「Create API Key」等のボタンを探してクリック")
         click_first(
             page,
             [
@@ -64,20 +66,19 @@ def main() -> int:
             ],
         )
         page.wait_for_timeout(2000)
+        vlog("確認ダイアログがあれば Create / Generate をクリック")
         click_first(page, ["Create", "Generate", "Confirm", "Continue"])
         page.wait_for_timeout(3000)
 
         key = extract_key_from_page(page)
         if not key:
-            shot = Path.home() / ".cursor/wbs-api-key-setup.png"
-            page.screenshot(path=str(shot), full_page=True)
-            log(f"⚠️ API key を自動取得できませんでした。手動で作成し保存:")
-            log(f"  pbpaste > {API_KEY_FILE}")
-            log(f"  スクリーンショット: {shot}")
+            vlog("API キーを画面から取得できませんでした。Chrome で手動作成も可")
+            log("TIER3: Integrations でキー作成 → pbpaste > ~/.config/cursor/cloud-api-key")
             return 1
 
         API_KEY_FILE.write_text(key + "\n", encoding="utf-8")
         API_KEY_FILE.chmod(0o600)
+        vlog("API キーを ~/.config/cursor/cloud-api-key に保存しました")
         log(f"✅ API key 保存: {API_KEY_FILE}")
         return 0
     finally:

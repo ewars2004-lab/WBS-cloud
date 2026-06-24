@@ -4,6 +4,8 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
+# shellcheck source=scripts/gws-visual.sh
+source "${REPO_ROOT}/scripts/gws-visual.sh"
 
 DO_CLOUD=0
 DO_PUSH=0
@@ -18,6 +20,9 @@ done
 
 if [[ "$DO_VISUAL" -eq 1 ]]; then
   export GWS_VISUAL=1
+  export GWS_USE_DEFAULT_CHROME=1
+  vlog "視覚モード: Cursor と Chrome を画面分割すると手順が見えます"
+  vlog "普段の Chrome プロファイルを使用します（自動化用の別プロファイルは使いません）"
 fi
 
 API_KEY_FILE="${HOME}/.config/cursor/cloud-api-key"
@@ -27,23 +32,27 @@ mkdir -p "$STATE_DIR"
 log() { echo "[gws-heal] $*" ; }
 
 verify_profile() {
-  python3 scripts/gws-verify-profile.py "$1" >/dev/null 2>&1
+  if [[ "${GWS_VISUAL:-}" == "1" ]]; then
+    python3 scripts/gws-verify-profile.py "$1"
+  else
+    python3 scripts/gws-verify-profile.py "$1" >/dev/null 2>&1
+  fi
 }
 
 heal_profile() {
   local profile="$1"
-  if verify_profile "$profile"; then
+  step "Google プロファイル '${profile}' を検証します"
+  if python3 scripts/gws-verify-profile.py "$1" >/dev/null 2>&1; then
     log "✅ verify OK: $profile"
     return 0
   fi
-  log "⚠️ verify NG: $profile → 再 OAuth"
+  vlog "認証が切れています → ブラウザで Google 再ログインします（${profile} のアカウントを選んでください）"
   bash scripts/gws-oauth-login.sh "$profile" || true
-  if verify_profile "$profile"; then
+  if python3 scripts/gws-verify-profile.py "$1" >/dev/null 2>&1; then
     log "✅ verify OK after OAuth: $profile"
     return 0
   fi
-  log "TIER3: Google アカウント選択/2FA が必要: $profile"
-  log "  完了したら: GWS_HEAL_CONTINUE=1 bash scripts/gws-heal.sh $*"
+  log "TIER3: Google アカウント選択/2FA が必要: $profile → 完了したら「続けて」"
   return 2
 }
 
@@ -52,13 +61,12 @@ heal_api_key() {
     log "✅ API key あり"
     return 0
   fi
-  if [[ "${GWS_VISUAL:-}" == "1" ]]; then
-    log "👁 Chrome を開きます（Cursor | Chrome 画面分割推奨）"
-    log "👁 Integrations → Cloud Agents API キー作成を自動操作します"
-  fi
-  log "API key 取得を試行…"
+  vlog "Cursor Dashboard → Integrations を開きます"
+  vlog "Cloud Agents API キーを作成して ~/.config/cursor/cloud-api-key に保存します"
+  step "Chrome 起動（未保存のタブがある場合は先に保存してください）"
   python3 scripts/chrome-api-key-setup.py || true
   if [[ -f "$API_KEY_FILE" && -s "$API_KEY_FILE" ]]; then
+    vlog "API キー取得完了"
     return 0
   fi
   rc=0
@@ -66,35 +74,37 @@ heal_api_key() {
   if [[ -f "$API_KEY_FILE" && -s "$API_KEY_FILE" ]]; then
     return 0
   fi
-  if [[ "$rc" -eq 2 ]]; then
-    return 2
-  fi
-  log "TIER3: Cursor ログイン/指紋後にチャットで「続けて」"
+  log "TIER3: Cursor ログイン/指紋 → 完了したら「続けて」"
   return 2
 }
 
 heal_local() {
-  log "=== Phase: 依存 ==="
+  step "Phase 1/6: 依存パッケージ"
   pip3 install --quiet -r requirements.txt
   python3 -c "import playwright" 2>/dev/null || pip3 install --quiet playwright
   python3 -m playwright install chromium 2>/dev/null || true
 
-  log "=== Phase: MCP ランチャー ==="
+  step "Phase 2/6: MCP ランチャー（~/.local/bin）"
   bash scripts/install-gws-mcp.sh
 
-  log "=== Phase: OAuth verify ==="
+  step "Phase 3/6: OAuth 検証（aircloset + personal）"
   heal_profile aircloset || return $?
   heal_profile personal || return $?
 
-  log "=== Phase: mcp.json / rules ==="
+  step "Phase 4/6: グローバル mcp.json とルール"
   python3 scripts/sync-cursor-mcp-json.py
   bash scripts/install-gws-cursor-rules.sh
 
-  log "=== Phase: secrets ファイル ==="
+  step "Phase 5/6: Cloud 用 Secret ファイル生成"
   bash scripts/prepare-dual-secrets.sh
 
-  log "=== Phase: CLI verify ==="
-  GWS_CONFIG_DIR="${HOME}/.config/gws-aircloset" python3 scripts/sheets-cli.py verify >/dev/null
+  step "Phase 6/6: WBS スプレッドシート読取テスト"
+  if [[ "${GWS_VISUAL:-}" == "1" ]]; then
+    GWS_CONFIG_DIR="${HOME}/.config/gws-aircloset" python3 scripts/sheets-cli.py verify
+  else
+    GWS_CONFIG_DIR="${HOME}/.config/gws-aircloset" python3 scripts/sheets-cli.py verify >/dev/null
+  fi
+  vlog "ローカル GWS は使える状態です"
   log "✅ ローカル heal 完了"
   return 0
 }
@@ -104,7 +114,7 @@ heal_git_push() {
     log "skip push (--push 未指定)"
     return 0
   fi
-  log "=== Phase: git pull / commit / push ==="
+  step "GitHub に push（Cloud VM がこのコードを clone します）"
   git fetch origin
   if git rev-parse --verify origin/main >/dev/null 2>&1; then
     git pull --rebase origin main || git pull origin main || true
@@ -114,9 +124,7 @@ heal_git_push() {
     log "commit する変更なし"
   else
     git commit -m "$(cat <<'EOF'
-Add dual GWS platform: heal, ui-agent, and cloud bootstrap.
-
-Unify aircloset/personal OAuth, MCP, and verify-driven recovery for all repos.
+Update GWS heal visual mode and Chrome default profile.
 EOF
 )"
   fi
@@ -125,10 +133,11 @@ EOF
 }
 
 heal_cloud() {
-  log "=== Phase: API key ==="
+  step "Cloud Phase 1/2: API キー"
   heal_api_key || return $?
 
-  log "=== Phase: Cloud launch ==="
+  step "Cloud Phase 2/2: Cloud Agent API 起動"
+  vlog "Dashboard は開きません。API に認証+ MCP を同梱して VM を起動します"
   bash scripts/launch-wbs-cloud-agent.sh verify
   bash scripts/launch-wbs-cloud-agent.sh launch | tee "${STATE_DIR}/last-launch.json"
   python3 - <<'PY' "${STATE_DIR}/status.json"
@@ -141,12 +150,12 @@ p.write_text(json.dumps({
   "agents_url": "https://cursor.com/agents",
 }, indent=2) + "\n", encoding="utf-8")
 PY
-  log "Cloud Agent 起動済み。VM 上で verify-cloud-ready が走る想定。"
-  log "結果: https://cursor.com/agents"
+  vlog "ブラウザで Agent の進捗を確認: https://cursor.com/agents"
+  open "https://cursor.com/agents" 2>/dev/null || true
+  log "Cloud Agent 起動済み"
   return 0
 }
 
-# --- main ---
 if [[ "${GWS_HEAL_CONTINUE:-}" == "1" ]]; then
   log "続行モード（Tier3 後）"
 fi

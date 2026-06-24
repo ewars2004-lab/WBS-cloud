@@ -1,6 +1,7 @@
 """Shared Chrome CDP helpers for Cursor Dashboard automation."""
 from __future__ import annotations
 
+import os
 import shutil
 import subprocess
 import time
@@ -13,8 +14,22 @@ SRC_PROFILE = Path.home() / "Library/Application Support/Google/Chrome"
 AUTOMATION_PROFILE = Path.home() / ".cursor/wbs-chrome-profile"
 
 
+def chrome_user_data_dir() -> Path:
+    if os.environ.get("GWS_USE_DEFAULT_CHROME", "0") == "1":
+        return SRC_PROFILE
+    return AUTOMATION_PROFILE
+
+
 def log(msg: str) -> None:
     print(msg, flush=True)
+
+
+def vlog(msg: str) -> None:
+    """視覚モード: ユーザーが Chrome を見ながら追える説明."""
+    if os.environ.get("GWS_VISUAL") == "1":
+        log(f"👁 {msg}")
+    else:
+        log(msg)
 
 
 def cdp_alive() -> bool:
@@ -27,6 +42,9 @@ def cdp_alive() -> bool:
 
 def sync_chrome_profile() -> None:
     marker = AUTOMATION_PROFILE / ".synced-from-default"
+    if os.environ.get("GWS_CHROME_RESET") == "1" and AUTOMATION_PROFILE.exists():
+        shutil.rmtree(AUTOMATION_PROFILE)
+        marker = AUTOMATION_PROFILE / ".synced-from-default"
     if marker.exists():
         return
     log("Chrome ログイン状態をコピーしています（初回のみ）…")
@@ -52,14 +70,23 @@ def ensure_chrome_cdp(start_url: str) -> None:
         log("✅ Chrome CDP 接続済み")
         return
 
-    sync_chrome_profile()
+    profile = chrome_user_data_dir()
+    if profile == SRC_PROFILE:
+        log("👁 普段の Chrome プロファイルで起動します（一度 Chrome が終了します）")
+        subprocess.run(
+            ["osascript", "-e", 'tell application "Google Chrome" to quit'],
+            check=False,
+        )
+        time.sleep(2)
+    else:
+        sync_chrome_profile()
 
     log("Google Chrome を起動しています…")
     subprocess.Popen(
         [
             CHROME_BIN,
             "--remote-debugging-port=9222",
-            f"--user-data-dir={AUTOMATION_PROFILE}",
+            f"--user-data-dir={profile}",
             "--no-first-run",
             "--no-default-browser-check",
             start_url,
@@ -74,6 +101,32 @@ def ensure_chrome_cdp(start_url: str) -> None:
             return
         time.sleep(1)
     raise RuntimeError("Chrome CDP 起動に失敗しました")
+
+
+def page_ready(page, min_chars: int = 200) -> bool:
+    try:
+        if "authenticator" in page.url or "login" in page.url.lower():
+            return True
+        text = page.inner_text("body", timeout=5000)
+        return len((text or "").strip()) >= min_chars
+    except Exception:
+        return False
+
+
+def reload_until_ready(page, url: str, attempts: int = 4) -> bool:
+    for i in range(attempts):
+        page.goto(url, wait_until="domcontentloaded")
+        page.wait_for_timeout(3000)
+        try:
+            page.wait_for_load_state("networkidle", timeout=15000)
+        except Exception:
+            pass
+        if page_ready(page):
+            return True
+        log(f"⚠️ ページが白いまま → 再読み込み ({i + 1}/{attempts})")
+        page.reload(wait_until="domcontentloaded")
+        page.wait_for_timeout(3000)
+    return page_ready(page)
 
 
 def wait_for_url(page, needle: str, timeout_sec: int = 300) -> bool:
@@ -114,5 +167,7 @@ def connect_page(start_url: str):
     context = browser.contexts[0] if browser.contexts else browser.new_context()
     page = context.pages[0] if context.pages else context.new_page()
     if start_url.split("/")[2] not in page.url:
-        page.goto(start_url, wait_until="domcontentloaded")
+        reload_until_ready(page, start_url)
+    elif not page_ready(page):
+        reload_until_ready(page, start_url)
     return pw, browser, page
