@@ -1,0 +1,13 @@
+[project]
+name = "wbs-engine"
+version = "0.1.0"
+description = "WBS更新チーム — 新NagiWBS 自動更新エンジン"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+wbs-run = "wbs_engine.runner:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

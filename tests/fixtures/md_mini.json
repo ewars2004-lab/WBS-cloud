@@ -1,0 +1,53 @@
+{
+  "values": [
+    ["", "", "", "担当者", "作成段階", "2026年6月"],
+    ["", "", "", "", "", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"],
+    ["", "", "", "", "", "日", "月", "火", "水", "木", "金", "土", "日", "月", "火", "水", "木", "金", "土", "日", "月", "火", "水", "木", "金", "土", "日", "月", "火", "水", "木", "金", "土", "日", "月"],
+    ["2027", "WI", "NOLLEYS", "namy", "計画", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["2027", "WI", "NOLLEYS", "namy", "計画", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+  ],
+  "grid": [
+    [{"formattedValue": ""}],
+    [{"formattedValue": ""}],
+    [{"formattedValue": ""}],
+    [{"formattedValue": "2027"}, {"formattedValue": "WI"}, {"formattedValue": "NOLLEYS"}],
+    [
+      {"formattedValue": "2027"},
+      {"formattedValue": "WI"},
+      {"formattedValue": "NOLLEYS"},
+      {"formattedValue": "namy"},
+      {"formattedValue": "計画"},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 1, "green": 1, "blue": 1}}},
+      {"formattedValue": "", "effectiveFormat": {"backgroundColor": {"red": 0.957, "green": 0.8, "blue": 0.8}}}
+    ]
+  ],
+  "wbs_first_row": 3927,
+  "wbs_values": [
+    ["NOLLEYS：WI", "計画作成", "1.0", "", "未着手", "", "", "", "参照元: BSOMD"]
+  ]
+}

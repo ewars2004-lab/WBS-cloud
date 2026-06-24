@@ -1,0 +1,12 @@
+---
+description: Google Workspace デュアルアカウントの MCP ルーティング
+alwaysApply: true
+---
+
+## Google Workspace デュアルアカウント（全リポジトリ共通）
+
+- **社内・WBS・air-closet 共有** → MCP `google-workspace-aircloset`（`r.yaguchi@air-closet.com`）
+- **個人・ewars2004** → MCP `google-workspace-personal`（`ewars2004@gmail.com`）
+- 両方とも Sheets / Google Slides / Docs / Drive / Calendar に対応
+- どちらか不明 → `drive_about` でメール確認。403 → もう一方を試す
+- 再認証: `~/Projects/WBS-cloud/scripts/gws-oauth-login.sh aircloset|personal`

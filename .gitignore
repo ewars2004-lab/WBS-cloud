@@ -1,8 +1,9 @@
-# Secrets / credentials — never commit
-.env
-.env.*
+# keep state json; do not commit secrets
+credentials.local.md
+.local/
 *.pickle
-secrets/
-SECRETS_LOCAL.txt
-.local/
-.local/
+.env
+__pycache__/
+.pytest_cache/
+.venv/
+*.pyc

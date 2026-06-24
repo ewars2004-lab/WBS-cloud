@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Cloud Agents API で WBS-cloud を起動（Dashboard Secret/MCP 手動登録をバイパス可能）
+# Cloud Agents API で WBS-cloud を起動（Dashboard Secret/MCP 手動登録をバイパス）
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -22,7 +22,7 @@ read_api_key() {
 }
 
 ensure_payload() {
-  "${REPO_ROOT}/scripts/setup-cloud-complete.sh" >/dev/null 2>&1 || true
+  bash "${REPO_ROOT}/scripts/prepare-dual-secrets.sh" >/dev/null 2>&1 || true
   python3 "${REPO_ROOT}/scripts/build-cloud-agent-payload.py" > "$PAYLOAD_FILE"
   echo "✅ payload: $PAYLOAD_FILE"
 }
@@ -36,14 +36,7 @@ case "$MODE" in
     echo "=== API キー確認 ==="
     if [[ -z "$api_key" ]]; then
       echo "❌ CURSOR_API_KEY 未設定"
-      echo ""
-      echo "次を実行（1回だけ）:"
-      echo "  1. open https://cursor.com/dashboard?tab=integrations"
-      echo "  2. Cloud Agents API → Create API Key"
-      echo "  3. mkdir -p ~/.config/cursor"
-      echo "     pbpaste > ~/.config/cursor/cloud-api-key && chmod 600 ~/.config/cursor/cloud-api-key"
-      echo "  4. ./scripts/launch-wbs-cloud-agent.sh launch"
-      open "https://cursor.com/dashboard?tab=integrations" 2>/dev/null || true
+      echo "  bash scripts/gws-bootstrap-all.sh   # API key 自動取得を含む"
       exit 1
     fi
     echo "✅ API key: ${API_KEY_FILE}"
@@ -56,7 +49,7 @@ case "$MODE" in
       echo "ERROR: set CURSOR_API_KEY or ${API_KEY_FILE}" >&2
       exit 1
     fi
-    echo "🚀 Launching Cloud Agent for WBS-cloud..."
+    echo "🚀 Launching Cloud Agent (envVars + mcpServers 同梱 → Dashboard 不要)..."
     resp="$(curl -sS -w "\n__HTTP__%{http_code}" \
       -X POST "https://api.cursor.com/v1/agents" \
       -u "${api_key}:" \
@@ -69,7 +62,7 @@ case "$MODE" in
       echo "HTTP $code" >&2
       exit 1
     fi
-    agent_id="$(echo "$body" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('agent',{}).get('id',''))" 2>/dev/null || true)"
+    agent_id="$(echo "$body" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('agent',{}).get('id','') or d.get('id',''))" 2>/dev/null || true)"
     if [[ -n "$agent_id" ]]; then
       echo ""
       echo "Agent: https://cursor.com/agents/${agent_id}"

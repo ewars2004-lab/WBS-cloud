@@ -1,60 +1,55 @@
-# WBS-cloud
+# WBS-cloud — 新NagiWBS 自動更新チーム
 
-**WBS更新チーム** を Cursor Cloud Agent で自律実行するリポジトリ。
+Slack実進捗と BSOMDカレンダー（塗りセル）から `新NagiWBS` を自律更新するエンジンです。  
+**どのPCでも** 同じ手順でセットアップできます。
 
-## クイックスタート
-
-### A. API 起動（Dashboard 貼り付け不要・推奨）
-
-```bash
-./scripts/setup-cloud-complete.sh
-# Integrations → Cloud Agents API でキー作成 → 保存:
-mkdir -p ~/.config/cursor && pbpaste > ~/.config/cursor/cloud-api-key && chmod 600 ~/.config/cursor/cloud-api-key
-./scripts/launch-wbs-cloud-agent.sh launch
-```
-
-### B. Dashboard 手動起動
-
-1. [docs/CLOUD_SETUP.md](docs/CLOUD_SETUP.md) のチェックリストを完了（Dashboard OAuth + Secrets）
-2. https://cursor.com/agents で `ewars2004-lab/WBS-cloud` を起動
-3. [docs/CLOUD_AGENT_ONE_SHOT.md](docs/CLOUD_AGENT_ONE_SHOT.md) のプロンプトを貼る
+## クイックスタート（任意のPC）
 
 ```bash
-osascript scripts/open-dashboard-secrets.applescript  # Secret をクリップボード + Dashboard を開く
+git clone https://github.com/ewars2004-lab/WBS-cloud.git ~/Projects/WBS-cloud
+cd ~/Projects/WBS-cloud
+chmod +x scripts/*.sh
+./scripts/bootstrap.sh
 ```
 
-## 構成
-
-```
-WBS-cloud/
-├── AGENTS.md                 ← Cloud Agent 入口
-├── .cursor/
-│   ├── mcp.json              ← Slack + Sheets + Figma
-│   └── environment.json      ← pip install
-├── skills/                   ← WBS更新チーム 5人格
-├── docs/
-│   ├── CLOUD_SETUP.md        ← セットアップチェックリスト
-│   ├── CLOUD_AGENT_ONE_SHOT.md
-│   ├── AUTOMATION.md         ← 定期バッチ
-│   └── mcp-setup.md
-└── scripts/
-    ├── aircloset-sheets-mcp-cloud.py
-    └── prepare-secrets.sh    ← ローカルで Secrets 値を生成
-```
-
-## 合言葉
-
-- `WBS更新チームでバッチ実行`
-- `先週金曜日以降の差分をWBSに反映して`
-
-## WBS マスター
-
-https://docs.google.com/spreadsheets/d/1VaQBMNy2ZCgYs57G2mQWiqof0sTH1umqY4HOjlZBLVE/edit?gid=2026060205
-
-## Desktop IDE
+Google認証を設定したあと:
 
 ```bash
-./scripts/bootstrap.sh   # ~/.cursor/skills へ symlink（任意）
+source .venv/bin/activate
+./scripts/wbs-run.sh doctor
+./scripts/wbs-run.sh validate
+./scripts/wbs-run.sh run              # dry-run（書込なし）
+./scripts/wbs-run.sh run --apply      # 本番書込
 ```
 
-Cloud Agent はリポジトリ内 `skills/` を直接読むため bootstrap 不要。
+## Cursor から使う
+
+1. `bootstrap.sh` で `wbs-workflow` スキルを `~/.cursor/skills/` にリンク
+2. チャットで **「WBS更新チームで実行」** と依頼
+3. エージェントは Slack MCP で `state/inbox/*.json` にイベントを保存 → `wbs-run run` を実行
+
+## アーキテクチャ
+
+| モジュール | 役割 |
+|-----------|------|
+| `cartographer` | WBS行の解析・案件インデックス |
+| `md_calendar` | BSOMD塗りセル → MDブランド行F列 |
+| `slack_events` | inbox JSON / Slack API からイベント収集 |
+| `inference` | Slack → 完了/進行中の推察 |
+| `auditor` | F列保護・根拠必須・Tier判定 |
+| `orchestrator` | 全工程を1 Run に統合 |
+| `sheet_writer` | Google Sheets へバッチ書込 |
+
+## 最重要ルール
+
+- **F列**: AIRCLOSET案件は編集禁止。`ブランド：シーズン` のMD行のみ更新可
+- 既存行の削除・並べ替え禁止
+- E列は `完了` / `未着手` / `進行中` のみ
+- 完了には H列 Slackリンク必須（LOW信頼度は完了禁止）
+
+## 対象シート
+
+- WBS: [新NagiWBS](https://docs.google.com/spreadsheets/d/1VaQBMNy2ZCgYs57G2mQWiqof0sTH1umqY4HOjlZBLVE/edit?gid=2026060205)
+- MD: [BSOMDスケジュール](https://docs.google.com/spreadsheets/d/1x9urTyDl_obuvbTCJVj3FlpYNFljRZNS6XdZcMOw2TQ/edit?gid=394259552)
+
+詳細は [MCP_SETUP.md](MCP_SETUP.md) と `skills/wbs-workflow/SKILL.md` を参照。

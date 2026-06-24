@@ -9,11 +9,15 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-MCP_PATH = ROOT / "aircloset-sheets-mcp-cloud.py"
+MCP_PATH = ROOT / "gws-python-mcp.py"
+DEFAULT_PROFILE_DIR = Path.home() / ".config/gws-aircloset"
 
 
 def _load_mcp():
-    spec = importlib.util.spec_from_file_location("aircloset_sheets_mcp_cloud", MCP_PATH)
+    import os
+
+    os.environ.setdefault("GWS_CONFIG_DIR", str(DEFAULT_PROFILE_DIR))
+    spec = importlib.util.spec_from_file_location("gws_python_mcp", MCP_PATH)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"Cannot load {MCP_PATH}")
     mod = importlib.util.module_from_spec(spec)

@@ -1,35 +1,44 @@
 #!/usr/bin/env bash
-# WBS更新チーム: link Cursor skills to this repo (run on each PC after clone)
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-CURSOR_SKILLS="$HOME/.cursor/skills"
+SKILLS_SRC="$REPO_ROOT/skills"
+SKILLS_DST="${CURSOR_SKILLS_DIR:-$HOME/.cursor/skills}"
 
-mkdir -p "$CURSOR_SKILLS"
+echo "==> WBS-cloud bootstrap ($REPO_ROOT)"
 
-for name in \
-  wbs-update-workflow \
-  wbs-update-planner \
-  wbs-slack-investigator \
-  wbs-update-writer \
-  wbs-update-verifier; do
-  src="$REPO_ROOT/skills/$name"
-  dest="$CURSOR_SKILLS/$name"
+if ! command -v python3 >/dev/null; then
+  echo "ERROR: python3 が必要です" >&2
+  exit 1
+fi
 
-  if [[ ! -d "$src" ]]; then
-    echo "ERROR: missing $src" >&2
-    exit 1
+python3 -m venv "$REPO_ROOT/.venv" 2>/dev/null || true
+# shellcheck disable=SC1091
+source "$REPO_ROOT/.venv/bin/activate"
+pip install -q -U pip
+pip install -q -r "$REPO_ROOT/requirements.txt"
+
+mkdir -p "$SKILLS_DST"
+for skill in "$SKILLS_SRC"/*/; do
+  name="$(basename "$skill")"
+  target="$SKILLS_DST/$name"
+  if [ -L "$target" ] || [ -d "$target" ]; then
+    rm -rf "$target"
   fi
-
-  if [[ -e "$dest" && ! -L "$dest" ]]; then
-    echo "ERROR: $dest exists and is not a symlink. Move aside manually." >&2
-    exit 1
-  fi
-
-  ln -sfn "$src" "$dest"
-  echo "linked: $dest -> $src"
+  ln -sf "$skill" "$target"
+  echo "  linked skill: $name"
 done
 
+mkdir -p "$REPO_ROOT/state/inbox"
+
+echo "==> doctor"
+python3 -m wbs_engine.runner doctor
+
 echo ""
-echo "WBS更新チーム bootstrap OK"
-echo "Repo: $REPO_ROOT"
+echo "完了。次のコマンド:"
+echo "  cd $REPO_ROOT && source .venv/bin/activate"
+echo "  python3 -m wbs_engine.runner validate     # ユニットテスト"
+echo "  python3 -m wbs_engine.runner run        # dry-run（本番WBS）"
+echo "  python3 -m wbs_engine.runner run --apply  # 書込（要Google認証）"
+echo ""
+echo "Google認証: MCP_SETUP.md を参照"

@@ -1,0 +1,21 @@
+{
+  "md_pink_namy": {
+    "rgb": [0.957, 0.8, 0.8],
+    "tolerance": 0.06,
+    "role": "md_deadline",
+    "buyer": "namy",
+    "description": "MD提出期日（ピンク系）"
+  },
+  "buyer_green": {
+    "rgb": [0.204, 0.659, 0.325],
+    "tolerance": 0.08,
+    "role": "buyer_work",
+    "description": "バイヤー作業期間（緑）"
+  },
+  "md_green_legacy": {
+    "rgb": [0.0, 1.0, 0.0],
+    "tolerance": 0.1,
+    "role": "md_deadline",
+    "description": "旧式MD緑"
+  }
+}

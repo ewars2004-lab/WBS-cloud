@@ -1,0 +1,17 @@
+{
+  "project_channel_pattern": "#pj_{backlog_id}_",
+  "search_queries": [
+    "from:r.yaguchi",
+    "from:Nagi",
+    "U08QC76DQRH"
+  ],
+  "scout_channels": [
+    "acdiv_qag_team_quality_design",
+    "acdiv_qag_group",
+    "2on1_nagi",
+    "team_brandセレクト",
+    "deploy-share",
+    "gas-error-log"
+  ],
+  "lookback_default": "2026-05-01"
+}
