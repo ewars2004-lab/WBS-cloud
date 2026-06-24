@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Cloud VM: Dashboard Secrets → pickle 展開 + 両プロファイル検証（リポ内スクリプトのみ・WBS-cloud 不要）
+# Cloud VM: Dashboard Secrets → pickle 展開 + 両プロファイル検証（リポ内スクリプトのみ・プラットフォームリポ不要）
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
@@ -34,7 +34,7 @@ fi
 verify_py="${ROOT}/scripts/gws-verify-profile.py"
 if [[ ! -f "$verify_py" ]]; then
   echo "❌ gws-verify-profile.py がこのリポにありません"
-  echo "   Mac で: bash ~/Projects/WBS-cloud/scripts/install-gws-per-repo-cloud.sh"
+  echo "   Mac で: bash ~/Projects/cursor-gws-platform/scripts/install-gws-per-repo-cloud.sh"
   exit 1
 fi
 

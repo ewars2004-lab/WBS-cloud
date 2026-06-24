@@ -2,7 +2,7 @@
 
 ## 1. Google Workspace（必須）
 
-**デュアルアカウント（全リポジトリ共通・正本）**: [docs/GWS_DUAL_ACCOUNT.md](docs/GWS_DUAL_ACCOUNT.md)
+**デュアルアカウント（全リポジトリ共通・正本）**: [docs/GWS_PLATFORM.md](docs/GWS_PLATFORM.md) → [cursor-gws-platform](https://github.com/ewars2004-lab/cursor-gws-platform)
 
 ```bash
 bash scripts/install-gws-mcp.sh

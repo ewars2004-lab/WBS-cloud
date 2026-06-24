@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 FAIL=0
 
-echo "=== WBS-cloud Cloud 検証（デュアル GWS + Sheets） ==="
+echo "=== WBS-cloud Cloud 検証（GWS + WBS Sheets） ==="
 
 bash scripts/verify-gws-cloud.sh || FAIL=1
 
