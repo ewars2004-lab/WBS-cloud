@@ -15,8 +15,7 @@ AUTOMATION_PROFILE = Path.home() / ".cursor/wbs-chrome-profile"
 
 
 def chrome_user_data_dir() -> Path:
-    if os.environ.get("GWS_USE_DEFAULT_CHROME", "0") == "1":
-        return SRC_PROFILE
+    # Chrome 136+: --remote-debugging-port は非デフォルト user-data-dir のみ有効
     return AUTOMATION_PROFILE
 
 
@@ -41,13 +40,17 @@ def cdp_alive() -> bool:
 
 
 def sync_chrome_profile() -> None:
+    force = os.environ.get("GWS_CHROME_FORCE_SYNC", "0") == "1"
     marker = AUTOMATION_PROFILE / ".synced-from-default"
     if os.environ.get("GWS_CHROME_RESET") == "1" and AUTOMATION_PROFILE.exists():
         shutil.rmtree(AUTOMATION_PROFILE)
         marker = AUTOMATION_PROFILE / ".synced-from-default"
-    if marker.exists():
+    if force and marker.exists():
+        marker.unlink()
+    if marker.exists() and not force:
         return
-    log("Chrome ログイン状態をコピーしています（初回のみ）…")
+    vlog("普段の Chrome からログイン状態をコピーします（初回 or 強制同期）")
+    log("Chrome ログイン状態をコピーしています…")
     AUTOMATION_PROFILE.mkdir(parents=True, exist_ok=True)
     src_default = SRC_PROFILE / "Default"
     dst_default = AUTOMATION_PROFILE / "Default"
@@ -71,15 +74,13 @@ def ensure_chrome_cdp(start_url: str) -> None:
         return
 
     profile = chrome_user_data_dir()
-    if profile == SRC_PROFILE:
-        log("👁 普段の Chrome プロファイルで起動します（一度 Chrome が終了します）")
-        subprocess.run(
-            ["osascript", "-e", 'tell application "Google Chrome" to quit'],
-            check=False,
-        )
-        time.sleep(2)
-    else:
-        sync_chrome_profile()
+    vlog("普段の Chrome を一度閉じ、ログイン済みコピーで Dashboard を開きます")
+    subprocess.run(
+        ["osascript", "-e", 'tell application "Google Chrome" to quit'],
+        check=False,
+    )
+    time.sleep(2)
+    sync_chrome_profile()
 
     log("Google Chrome を起動しています…")
     subprocess.Popen(
@@ -95,12 +96,12 @@ def ensure_chrome_cdp(start_url: str) -> None:
         stderr=subprocess.DEVNULL,
     )
 
-    for _ in range(40):
+    for _ in range(60):
         if cdp_alive():
             log("✅ Chrome 起動完了")
             return
         time.sleep(1)
-    raise RuntimeError("Chrome CDP 起動に失敗しました")
+    raise RuntimeError("Chrome CDP 起動に失敗しました（Chrome 136+ は別 user-data-dir が必須）")
 
 
 def page_ready(page, min_chars: int = 200) -> bool:

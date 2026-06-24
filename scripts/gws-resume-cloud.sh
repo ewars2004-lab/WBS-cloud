@@ -7,7 +7,7 @@ cd "$REPO_ROOT"
 source "${REPO_ROOT}/scripts/gws-visual.sh"
 
 export GWS_VISUAL=1
-export GWS_USE_DEFAULT_CHROME=1
+export GWS_CHROME_FORCE_SYNC=1
 export GWS_HEAL_CONTINUE=1
 
 vlog "再開: API キー → Cloud Agent 起動"

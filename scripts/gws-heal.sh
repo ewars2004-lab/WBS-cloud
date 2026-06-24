@@ -20,9 +20,9 @@ done
 
 if [[ "$DO_VISUAL" -eq 1 ]]; then
   export GWS_VISUAL=1
-  export GWS_USE_DEFAULT_CHROME=1
+  export GWS_CHROME_FORCE_SYNC=1
   vlog "視覚モード: Cursor と Chrome を画面分割すると手順が見えます"
-  vlog "普段の Chrome プロファイルを使用します（自動化用の別プロファイルは使いません）"
+  vlog "Chrome 136+ の制約: ログイン済みコピープロファイルで Dashboard を開きます"
 fi
 
 API_KEY_FILE="${HOME}/.config/cursor/cloud-api-key"
