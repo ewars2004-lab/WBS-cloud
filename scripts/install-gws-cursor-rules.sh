@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
-# Install GWS routing rule into WBS-cloud + step-rope repos (no Settings paste needed).
+# Install GWS rules into WBS-cloud + step-rope repos.
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SRC="${REPO_ROOT}/.cursor/rules/gws-dual-account.mdc"
+RULES=(
+  "gws-dual-account.mdc"
+  "gws-platform-goal.mdc"
+)
 
 TARGETS=(
   "${REPO_ROOT}"
@@ -17,12 +20,19 @@ for dir in "${TARGETS[@]}"; do
     echo "SKIP (no dir): $dir"
     continue
   fi
-  dest="${dir}/.cursor/rules/gws-dual-account.mdc"
-  if [[ "$(cd "$dir" && pwd)" == "$(cd "$REPO_ROOT" && pwd)" ]]; then
-    echo "✅ (source) $dest"
-    continue
-  fi
-  mkdir -p "$(dirname "$dest")"
-  cp "$SRC" "$dest"
-  echo "✅ $dest"
+  for rule in "${RULES[@]}"; do
+    src="${REPO_ROOT}/.cursor/rules/${rule}"
+    dest="${dir}/.cursor/rules/${rule}"
+    if [[ ! -f "$src" ]]; then
+      echo "SKIP (no src): $src"
+      continue
+    fi
+    if [[ "$(cd "$dir" && pwd)" == "$(cd "$REPO_ROOT" && pwd)" ]]; then
+      echo "✅ (source) $dest"
+      continue
+    fi
+    mkdir -p "$(dirname "$dest")"
+    cp "$src" "$dest"
+    echo "✅ $dest"
+  done
 done

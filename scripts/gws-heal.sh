@@ -8,11 +8,13 @@ cd "$REPO_ROOT"
 source "${REPO_ROOT}/scripts/gws-visual.sh"
 
 DO_CLOUD=0
+DO_CLOUD_UI=0
 DO_PUSH=0
 DO_VISUAL=0
 for arg in "$@"; do
   case "$arg" in
     --cloud) DO_CLOUD=1 ;;
+    --cloud-ui) DO_CLOUD_UI=1 ;;
     --push) DO_PUSH=1 ;;
     --visual) DO_VISUAL=1 ;;
   esac
@@ -132,8 +134,15 @@ EOF
   log "✅ push 完了"
 }
 
-heal_cloud() {
-  step "Cloud Phase 1/2: API キー"
+heal_cloud_ui() {
+  step "Cloud: Dashboard Secrets 確認（Agent は自動起動しない）"
+  vlog "北極星 C1-C2: docs/GWS_NORTH_STAR.md"
+  bash scripts/cloud-agent-ui-launch.sh || return $?
+  return 0
+}
+
+heal_cloud_api() {
+  step "Cloud Phase 1/2: API キー（任意・上級者経路）"
   heal_api_key || return $?
 
   step "Cloud Phase 2/2: Cloud Agent API 起動"
@@ -162,10 +171,13 @@ fi
 
 heal_local || exit $?
 
-if [[ "$DO_CLOUD" -eq 1 ]]; then
+if [[ "$DO_CLOUD_UI" -eq 1 ]]; then
+  heal_cloud_ui || exit $?
+elif [[ "$DO_CLOUD" -eq 1 ]]; then
   heal_git_push || exit $?
-  heal_cloud || exit $?
+  heal_cloud_api || exit $?
 fi
 
+bash scripts/gws-verify-workspace.sh >/dev/null && log "✅ 北極星 L1-L3 OK（docs/GWS_NORTH_STAR.md）"
 log "=== heal 成功 ==="
 exit 0

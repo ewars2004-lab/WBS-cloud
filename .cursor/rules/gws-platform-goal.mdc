@@ -1,0 +1,26 @@
+---
+description: GWS プラットフォーム北極星 — 全リポ共通・APIキー不要がデフォルト
+alwaysApply: true
+---
+
+## 北極星（忘れない）
+
+目的は **ワークスペース全体の GWS 二重アカウント基盤**（ローカル + Cloud）。WBS-cloud の起動はゴールではない。
+
+正本: `docs/GWS_NORTH_STAR.md`
+
+## 完了条件
+
+- ローカル: `bash scripts/gws-verify-workspace.sh` が OK
+- Cloud: Dashboard Secrets 済み + 任意リポの Cloud Agent で `verify-cloud-ready.sh` が OK
+
+## 禁止（迷ったら読む）
+
+- Integrations で API キー作成を試みない
+- API キー未取得をブロッカーにして UI 起動を放棄しない
+- WBS-cloud 専用 Cloud 起動だけを「目的達成」と報告しない
+- ユーザーに Dashboard コピペ・pbpaste を常態化しない（Tier3 のみ）
+
+## Cloud のデフォルト経路
+
+`cursor.com/agents` から UI 起動。Secrets は Dashboard 共通。API は任意。
