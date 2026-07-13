@@ -1,0 +1,372 @@
+{
+  "run_id": "20260713-1010-team",
+  "batch_id": "2026-07-13T10:10:00+09:00",
+  "investigate_from": "2026-07-06",
+  "mode": "10人体制（WBS担当7+探索3）",
+  "auditor": "PASS (manual Verifier)",
+  "patches": [
+    {
+      "row": 301,
+      "case_id": "FRAY I.D：WI",
+      "process": "転記",
+      "updates": {
+        "D": "転記完了。次シーズン予定をBSOMDカレンダーで確認",
+        "E": "完了",
+        "G": "2026/07/06",
+        "H": "https://air-closet.slack.com/archives/C01EV9M3KKK/p1783327433761779",
+        "I": "Slack: 7/6 Nagi「FRAY I.D：WI 転記しました!」（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high",
+      "note": "MD系。F列はカレンダー未読のため変更なし"
+    },
+    {
+      "row": 298,
+      "case_id": "FRAY I.D：WI",
+      "process": "FB",
+      "updates": {
+        "D": "転記到達により前工程完了扱い",
+        "E": "完了",
+        "G": "2026/07/06",
+        "H": "https://air-closet.slack.com/archives/C01EV9M3KKK/p1783327433761779",
+        "I": "Slack: 7/6 転記完了に伴い前工程完了（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 299,
+      "case_id": "FRAY I.D：WI",
+      "process": "修正",
+      "updates": {
+        "D": "転記到達により前工程完了扱い",
+        "E": "完了",
+        "G": "2026/07/06",
+        "H": "https://air-closet.slack.com/archives/C01EV9M3KKK/p1783327433761779",
+        "I": "Slack: 7/6 転記完了に伴い前工程完了（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 300,
+      "case_id": "FRAY I.D：WI",
+      "process": "修正FB",
+      "updates": {
+        "D": "転記到達により前工程完了扱い",
+        "E": "完了",
+        "G": "2026/07/06",
+        "H": "https://air-closet.slack.com/archives/C01EV9M3KKK/p1783327433761779",
+        "I": "Slack: 7/6 転記完了に伴い前工程完了（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 405,
+      "case_id": "AIRCLOSET-131676",
+      "process": "開発進捗管理",
+      "updates": {
+        "D": "7/8 リリース完了。UATチケット(AIRCLOSET-134244)クローズ確認",
+        "E": "完了",
+        "G": "2026/07/08",
+        "H": "https://air-closet.slack.com/archives/C0B8V42418E/p1783387395666559",
+        "I": "Slack: 7/8 Seiji「release completed」。リリース到達で開発完了（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 406,
+      "case_id": "AIRCLOSET-131676",
+      "process": "総合テストの実施",
+      "updates": {
+        "D": "UAT再確認完了後リリース済。チケットクローズ残確認",
+        "E": "完了",
+        "G": "2026/07/08",
+        "H": "https://air-closet.slack.com/archives/C0B8V42418E/p1783387395666559",
+        "I": "Slack: 7/7 Kaori再確認→7/8 リリース完了（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 407,
+      "case_id": "AIRCLOSET-131676",
+      "process": "リリース",
+      "updates": {
+        "D": "リリース後テストを実施する",
+        "E": "完了",
+        "G": "2026/07/08",
+        "H": "https://air-closet.slack.com/archives/C0B8V42418E/p1783387395666559",
+        "I": "Slack: 7/8 Seiji「release completed」（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 512,
+      "case_id": "AIRCLOSET-133637",
+      "process": "リリース",
+      "updates": {
+        "D": "UATチケット(AIRCLOSET-134303)クローズ確認",
+        "E": "完了",
+        "G": "2026/07/06",
+        "H": "https://air-closet.slack.com/archives/C0BDAVB1JQ2/p1783307824084249",
+        "I": "Slack: 7/6 fassy「無事にリリースされたよ」（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 511,
+      "case_id": "AIRCLOSET-133637",
+      "process": "総合テストの実施",
+      "updates": {
+        "D": "リリース到達により完了。UATチケットクローズ残確認",
+        "E": "完了",
+        "G": "2026/07/06",
+        "H": "https://air-closet.slack.com/archives/C0BDAVB1JQ2/p1783307824084249",
+        "I": "Slack: 7/6 リリース完了に伴い総合テスト実施完了扱い（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 510,
+      "case_id": "AIRCLOSET-133637",
+      "process": "開発進捗管理",
+      "updates": {
+        "D": "リリース完了。UATチケットクローズ残確認",
+        "E": "完了",
+        "G": "2026/07/06",
+        "H": "https://air-closet.slack.com/archives/C0BDAVB1JQ2/p1783307824084249",
+        "I": "Slack: 7/6 リリース完了に伴い開発完了（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 509,
+      "case_id": "AIRCLOSET-133637",
+      "process": "インプットMTG",
+      "updates": {
+        "D": "リリース到達により完了扱い",
+        "E": "完了",
+        "G": "2026/07/06",
+        "H": "https://air-closet.slack.com/archives/C0BDAVB1JQ2/p1783307824084249",
+        "I": "Slack: 7/6 リリース完了に伴い前工程完了（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 508,
+      "case_id": "AIRCLOSET-133637",
+      "process": "エンジニア見積もりMTG",
+      "updates": {
+        "D": "リリース到達により完了扱い",
+        "E": "完了",
+        "G": "2026/07/06",
+        "H": "https://air-closet.slack.com/archives/C0BDAVB1JQ2/p1783307824084249",
+        "I": "Slack: 7/6 リリース完了に伴い前工程完了（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 502,
+      "case_id": "AIRCLOSET-133637",
+      "process": "Figma作成",
+      "updates": {
+        "D": "リリース到達により完了扱い",
+        "E": "完了",
+        "G": "2026/07/06",
+        "H": "https://air-closet.slack.com/archives/C0BDAVB1JQ2/p1783307824084249",
+        "I": "Slack: 7/6 リリース完了に伴い前工程完了（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 500,
+      "case_id": "AIRCLOSET-133637",
+      "process": "5W1H",
+      "updates": {
+        "D": "リリース到達により完了扱い",
+        "E": "完了",
+        "G": "2026/07/06",
+        "H": "https://air-closet.slack.com/archives/C0BDAVB1JQ2/p1783307824084249",
+        "I": "Slack: 7/6 リリース完了に伴い前工程完了（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 36,
+      "case_id": "AIRCLOSET-100237",
+      "process": "開発進捗管理",
+      "updates": {
+        "D": "Noah基本設計(AIRCLOSET-135342)進捗を#pj_100237で確認。7月中旬リリース目標",
+        "E": "進行中",
+        "G": "",
+        "H": "https://air-closet.slack.com/archives/C0B6BHB6N3S/p1783905183274689",
+        "I": "Slack: 7/13 Redが基本設計展開・Noah受領。7/7 Shuriが対応範囲拡大（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 362,
+      "case_id": "AIRCLOSET-108834",
+      "process": "開発進捗管理",
+      "updates": {
+        "D": "結合期限7/15・総合7/21・リリース7/22。実績Pt12まで増加中",
+        "E": "進行中",
+        "G": "",
+        "H": "https://air-closet.slack.com/archives/C09DU1157HD/p1783322287024819",
+        "I": "Slack: 7/6 基本設計完了(Fasssy/Shuri)。7/10 期限確定・実績Pt増加（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 340,
+      "case_id": "AIRCLOSET-60434",
+      "process": "開発進捗管理",
+      "updates": {
+        "D": "ITレビュー結果と結合テスト着手を#pj_60434/#ace_qa_reviewで確認（RL期限7/21）",
+        "E": "進行中",
+        "G": "",
+        "H": "https://air-closet.slack.com/archives/C0B066CBEBX/p1783306893445889",
+        "I": "Slack: 7/6 基本設計完了(50pt)。実績Pt〜36。7/10 IT_Ch1レビュー依頼（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 234,
+      "case_id": "AIRCLOSET-124304",
+      "process": "開発進捗管理",
+      "updates": {
+        "D": "レビュー/stg確認完了の明示連絡を#pj_124304で確認",
+        "E": "進行中",
+        "G": "",
+        "H": "https://air-closet.slack.com/archives/C0AK7BMT8DT/p1783301038095069",
+        "I": "Slack: 7/6 Nagiレビュー完了待ち。7/10 実績Pt65・stgリリース・テストxlsx共有（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 190,
+      "case_id": "AIRCLOSET-81205",
+      "process": "総合テスト作成 #1 / FB依頼",
+      "updates": {
+        "D": "バグスプリン優先度回復後に再開可否を判断（一旦ステイ）",
+        "E": "進行中",
+        "G": "",
+        "H": "https://air-closet.slack.com/archives/C0AV849PB0F/p1783301657546139",
+        "I": "Slack: 7/6 Nagi「バグスプリント優先度が下がったのでリスケ、一旦案件の進行はステイ」（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 193,
+      "case_id": "AIRCLOSET-81205",
+      "process": "エンジニア見積もりMTG",
+      "updates": {
+        "D": "ステイ中。優先度回復後に見積もりMTG再開",
+        "E": "進行中",
+        "G": "",
+        "H": "https://air-closet.slack.com/archives/C0AV849PB0F/p1783301657546139",
+        "I": "Slack: 7/6 ステイ宣言。以降チャンネル活動なし（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 368,
+      "case_id": "AIRCLOSET-133142",
+      "process": "開発進捗管理",
+      "updates": {
+        "D": "Shuriによるstg総合テスト結果を#pj_133142で待つ",
+        "E": "進行中",
+        "G": "",
+        "H": "https://air-closet.slack.com/archives/C0BD1GXSY3A/p1783904970862799",
+        "I": "Slack: 7/13 Same「総合テスト準備できた」stg提示。Pt42→64（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 369,
+      "case_id": "AIRCLOSET-133142",
+      "process": "総合テストの実施",
+      "updates": {
+        "D": "Shuriのstg総合テスト結果を反映する",
+        "E": "進行中",
+        "G": "",
+        "H": "https://air-closet.slack.com/archives/C0BD1GXSY3A/p1783904970862799",
+        "I": "Slack: 7/13 Sameがstg総合テスト環境準備完了・Shuriテスト依頼（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 246,
+      "case_id": "AIRCLOSET-123067",
+      "process": "バリデーションリスト作成 #1 / FB依頼",
+      "updates": {
+        "D": "基本設計完了(7/9)。2チャンク開発・QA(RFID)と8月初旬リリースを追う",
+        "E": "進行中",
+        "G": "",
+        "H": "https://air-closet.slack.com/archives/C0AF5P0E5M5/p1783589666828569",
+        "I": "Slack: 7/9 fassy基本設計完了(183pt)・Shuri+1。開発フェーズ移行（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 435,
+      "case_id": "AIRCLOSET-132300",
+      "process": "開発進捗管理",
+      "updates": {
+        "D": "Pinky QA（来週火曜予定）完了を待つ。リリース期限7/22",
+        "E": "進行中",
+        "G": "",
+        "H": "https://air-closet.slack.com/archives/C0BBP9BLJ8P/p1783651398334639",
+        "I": "Slack: 7/7基本設計完了。7/10 コード完了・QA翌週火曜（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 450,
+      "case_id": "AIRCLOSET-133554",
+      "process": "開発進捗管理",
+      "updates": {
+        "D": "7/13 System Test結果を確認し問題なければリリース日程へ",
+        "E": "進行中",
+        "G": "",
+        "H": "https://air-closet.slack.com/archives/C0BD1KGQG22/p1783666500551659",
+        "I": "Slack: 7/10 Hiro「実装と結合が完了」。System Test 7/13 9-11設定（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 465,
+      "case_id": "AIRCLOSET-133625",
+      "process": "開発進捗管理",
+      "updates": {
+        "D": "解約PJと同日のUAT実施を確定し実施→リリース（期限7/27）",
+        "E": "進行中",
+        "G": "",
+        "H": "https://air-closet.slack.com/archives/C0BDSFLQYJW/p1783668235872909",
+        "I": "Slack: 7/10 Hiro「開発完了」。総合テスト日程調整中。期限7/15→7/27（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    },
+    {
+      "row": 390,
+      "case_id": "AIRCLOSET-130517",
+      "process": "開発進捗管理",
+      "updates": {
+        "D": "来週着手時に方針MD不明点を確認しゲート提案を固める",
+        "E": "進行中",
+        "G": "",
+        "H": "https://air-closet.slack.com/archives/C0B5HLAGSTZ/p1783669711530429",
+        "I": "Slack: 7/10 Wassyが設計方針MD共有。開発確認は来週着手時（WBS更新チーム 2026/07/13）"
+      },
+      "confidence": "high"
+    }
+  ],
+  "skipped_ambiguous": [
+    {"case_id": "AIRCLOSET-134272", "reason": "見積もり後の進捗不明 (confidence:low)"},
+    {"case_id": "AIRCLOSET-134331", "reason": "総合テスト作成アサインのみ (confidence:low)"},
+    {"case_id": "AIRCLOSET-133631", "reason": "アサインのみ・7/6以降無音"},
+    {"case_id": "AIRCLOSET-60688", "reason": "6/29以降人の進捗なし・デザイン要否未記入"},
+    {"case_id": "MDカレンダー他ブランド", "reason": "BSOMDカレンダー塗りが読めずF列未更新"}
+  ],
+  "ghost_candidates": [
+    {"case_id": "AIRCLOSET-128763", "note": "総合テスト完了・7/13 App+Webリリース予定。WBS行未確認"},
+    {"case_id": "AIRCLOSET-134894", "note": "7/8新規チャンネル。WBS未登録の可能性"}
+  ]
+}

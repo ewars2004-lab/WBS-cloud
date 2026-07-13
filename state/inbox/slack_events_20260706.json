@@ -1,0 +1,56 @@
+[
+  {
+    "channel_id": "C0AV84EDB5M",
+    "channel_name": "pj_103665",
+    "message_ts": "1782801919.954689",
+    "permalink": "https://air-closet.slack.com/archives/C0AV84EDB5M/p1782801919954689",
+    "text": "リリース後テスト完了です。 Backlogクローズしました。 状態: 処理中→完了",
+    "user": "U08QC76DQRH",
+    "project_keys": ["AIRCLOSET-103665", "pj_103665"]
+  },
+  {
+    "channel_id": "C09LK03GECE",
+    "channel_name": "pj_112312",
+    "message_ts": "1783058295.297369",
+    "permalink": "https://air-closet.slack.com/archives/C09LK03GECE/p1783058295297369",
+    "text": "リリース後テスト完了です!",
+    "user": "U08QC76DQRH",
+    "project_keys": ["AIRCLOSET-112312", "pj_112312"]
+  },
+  {
+    "channel_id": "C0AF5P0E5M5",
+    "channel_name": "pj_123067",
+    "message_ts": "1783065712.767079",
+    "permalink": "https://air-closet.slack.com/archives/C0AF5P0E5M5/p1783065712767079",
+    "text": "AIRCLOSET-123067 実績Pt 0→13 基本設計終了予定 7/3",
+    "user": "U01E71HK00N",
+    "project_keys": ["AIRCLOSET-123067", "pj_123067"]
+  },
+  {
+    "channel_id": "C0AK7BMT8DT",
+    "channel_name": "pj_124304",
+    "message_ts": "1783065708.880959",
+    "permalink": "https://air-closet.slack.com/archives/C0AK7BMT8DT/p1783065708880959",
+    "text": "AIRCLOSET-124304 結合期限7/3 リリース期限7/9 Pt64",
+    "user": "U01E71HK00N",
+    "project_keys": ["AIRCLOSET-124304", "pj_124304"]
+  },
+  {
+    "channel_id": "C0B6BHB6N3S",
+    "channel_name": "pj_100237",
+    "message_ts": "1783044885.265389",
+    "permalink": "https://air-closet.slack.com/archives/C0B6BHB6N3S/p1783044885265389",
+    "text": "開発インプットMTG 7/3実施 Noah担当 7月中旬リリース目標",
+    "user": "U08QC76DQRH",
+    "project_keys": ["AIRCLOSET-100237", "pj_100237"]
+  },
+  {
+    "channel_id": "C0BD1GXSY3A",
+    "channel_name": "pj_133142",
+    "message_ts": "1782892902.860169",
+    "permalink": "https://air-closet.slack.com/archives/C0BD1GXSY3A/p1782892902860169",
+    "text": "AIRCLOSET-133142 実績Pt 24→25 開発期限7/6",
+    "user": "U01E71HK00N",
+    "project_keys": ["AIRCLOSET-133142", "pj_133142"]
+  }
+]
